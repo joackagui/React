@@ -1,0 +1,45 @@
+<head>
+  <title>Class5 Form</title>
+</head>
+<body>
+  <h1>Please fill out the form below:</h1>
+  <form action="/submit" method="post">
+    <hr />
+    <h2>Personal Information:</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required />
+    <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" name="lastname" required />
+    <br />
+    <label for="country">Country:</label>
+    <select name="country" id="country">
+      <option value="usa">USA</option>
+      <option value="canada">Canada</option>
+      <option value="mexico">Mexico</option>
+    </select>
+    <hr />
+    <h2>Choose your Modality:</h2>
+    <fieldset>
+      <legend>Choose a Modality</legend>
+      <label>
+        <input type="radio" value="in-person" name="modality" /> In-Person
+      </label>
+      <label>
+        <input type="radio" value="online" name="modality" /> Online
+      </label>
+    </fieldset>
+
+    <hr />
+    <h2>Leave a comment:</h2>
+    <label for="comment">Insert a comment:</label>
+    <br />
+    <textarea id="comment" name="comment"></textarea>
+
+    <br />
+    <hr />
+
+    <button type="button">Preview</button>
+    <button type="reset">Reset Form</button>
+    <button type="submit">Submit</button>
+  </form>
+</body>
