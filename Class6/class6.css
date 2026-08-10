@@ -1,0 +1,15 @@
+p {
+    color: red;
+    font-size: 40px;
+    text-align: center;
+}
+h1, p {
+    color: blue;
+    font-size: 50px;
+    text-align: center;
+    background-color: black;
+}
+#main {
+    background-color: yellow;
+    text-align: center;
+}
