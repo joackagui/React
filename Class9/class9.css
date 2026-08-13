@@ -1,0 +1,72 @@
+.memory td {
+  width: 3.5rem;
+  height: 3.5rem;
+  text-align: center;
+  font-size: 2rem;
+  border: 2px solid black;
+  color: transparent;
+}
+
+.memory {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+.memory td:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.memory td.revealed {
+  color: black;
+}
+
+.lane {
+  width: 24rem;
+  border: 2px solid black;
+}
+
+.runner {
+  border-bottom: 1px dashed #b8c2cc;
+  padding: 0.5rem;
+  background-color: #f4f7fb;
+  height: 3rem;
+  font-size: 1.5rem;
+  transition: background-color 0.2s;
+  transition: padding-left 0.2s;
+}
+
+.normal {
+  width: 12rem;
+  padding: 1rem;
+  background-color: gray;
+  border: 2px solid black;
+  position: static;
+}
+
+.reference {
+  border: 2px solid black;
+  padding: 1rem;
+  width: 12rem;
+  left: 5rem;
+  top: 5rem;
+  position: relative;
+  background-color: lightgray;
+}
+
+.card {
+  width: 16rem;
+  padding: 1rem;
+  background-color: lightblue;
+  border: 1px solid blue;
+  top: 5rem;
+  position: relative;
+}
+
+.tag {
+  background-color: orange;
+  padding: 0.5rem;
+  top: 5rem;
+  left: 0.5rem;
+  position: absolute;
+}
