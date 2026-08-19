@@ -8,5 +8,7 @@ jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
-      - name: SayHello
+      - name: Say Hello
         run: echo "Hello World!"
+      - name: Download Code
+        uses: actions/checkout@v3
