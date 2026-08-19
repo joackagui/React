@@ -16,3 +16,7 @@ jobs:
         run: pwd
       - name: List Files
         run: ls -la
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
