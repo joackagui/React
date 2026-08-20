@@ -19,7 +19,10 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
       - name: Node.js version
         run: node -v
-
+      - name: Install Dependencies
+        run: npm install
+      - name: Run Eslint
+        run: npm run check:js
