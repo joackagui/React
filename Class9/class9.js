@@ -1,3 +1,3 @@
-function reveal(cell) {
+export function reveal(cell) {
   cell.classList.toggle("revealed");
 }
