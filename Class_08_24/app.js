@@ -1,0 +1,11 @@
+"use strict";
+let tries = 3;
+let message = "Hello, TypeScript!";
+let active = true;
+const numb = 5;
+console.log(`Tries: ${tries}`);
+console.log(`Message: ${message}`);
+console.log(`Active: ${active}`);
+console.log(`Number: ${numb}`);
+console.log(numb == 5);
+console.log(numb === 5);

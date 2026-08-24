@@ -1,0 +1,26 @@
+.memory td {
+  width: 3.5rem;
+  height: 3.5rem;
+  text-align: center;
+  font-size: 2rem;
+  border: 2px solid black;
+  color: transparent;
+}
+
+.memory {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+.memory td:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.memory td.revealed {
+  color: black;
+}
+
+.memory td.exploded {
+  color: red;
+}

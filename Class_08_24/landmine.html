@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="landmine.css" />
+  </head>
+  <body>
+    <h1>Landmine Game</h1>
+    <p>Welcome to the Landmine Game!</p>
+    <p>Click on the cells to reveal them. Avoid the landmines!</p>
+    <table class="memory">
+      <tr>
+        <td onclick="reveal(this, new Cell(0, 0, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(0, 1, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(0, 2, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(0, 3, '🙃'))">🙃</td>
+      </tr>
+      <tr>
+        <td onclick="reveal(this, new Cell(1, 0, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(1, 1, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(1, 2, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(1, 3, '🙃'))">🙃</td>
+      </tr>
+      <tr>
+        <td onclick="reveal(this, new Cell(2, 0, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(2, 1, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(2, 2, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(2, 3, '💣'))">💣</td>
+      </tr>
+      <tr>
+        <td onclick="reveal(this, new Cell(3, 0, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(3, 1, '💣'))">💣</td>
+        <td onclick="reveal(this, new Cell(3, 2, '🙃'))">🙃</td>
+        <td onclick="reveal(this, new Cell(3, 3, '🙃'))">🙃</td>
+      </tr>
+    </table>
+    <script src="landmine.js"></script>
+    <br />
+  </body>
+</html>
