@@ -18,9 +18,7 @@ jobs:
               run: npm install
             - name: Install TypeScript
               run: npm install -g typescript --save -dev
-            - name: Change Directory
-              run: cd Class_08_25
             - name: Run tsc
-              run: tsc landmine.ts
+              run: tsc Class_08_25/landmine.ts
             - name: Run tsc
-              run: tsc --noEmit landmine.ts
+              run: tsc --noEmit Class_08_25/landmine.ts
