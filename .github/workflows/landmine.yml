@@ -5,7 +5,7 @@ on:
             - main
     workflow_dispatch:
 jobs:
-    say_hello:
+    run_landmine:
         runs-on: ubuntu-latest
         steps:
             - name: Install Node.js
