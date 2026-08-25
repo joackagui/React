@@ -1,20 +1,19 @@
 name: Landmine Game
 on:
-
-  workflow_dispatch:
+    workflow_dispatch:
 jobs:
-  say_hello:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "24"
-      - name: Install Dependencies
-        run: npm install
-      - name: Install TypeScript
-        run: npm install -g typescript
-      - name: Run tsc
-        run: tsc landmine.ts
-      - name: Run tsc
-        run: tsc --noEmit landmine.ts
+    say_hello:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "24"
+            - name: Install Dependencies
+              run: npm install
+            - name: Install TypeScript
+              run: npm install -g typescript
+            - name: Run tsc
+              run: tsc landmine.ts
+            - name: Run tsc
+              run: tsc --noEmit landmine.ts
