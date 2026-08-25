@@ -1,0 +1,26 @@
+.landmine td {
+  width: 3.5rem;
+  height: 3.5rem;
+  text-align: center;
+  font-size: 2rem;
+  border: 2px solid black;
+  color: transparent;
+}
+
+.landmine {
+  border-collapse: collapse;
+  margin: auto;
+}
+
+.landmine td:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.landmine td.revealed {
+  color: black;
+}
+
+.landmine td.exploded {
+  background-color: #ff9999;
+}
