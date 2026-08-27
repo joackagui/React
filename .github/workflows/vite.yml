@@ -19,5 +19,4 @@ jobs:
             - name: Run Vite Build
               run: |
                   cd Class_08_26/tic-tac-toe
-                  npm run dev
-                  echo "Vite build completed successfully."
+                  npm run build
