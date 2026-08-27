@@ -1,5 +1,23 @@
 export default function TicTacToe() {
-    return <section>
-        Hello, this is a Tic Tac Toe game!
+  return (
+    <section>
+      <table>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
     </section>
+  );
 }

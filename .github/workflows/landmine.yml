@@ -1,24 +1,21 @@
 name: Landmine Game
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+  workflow_dispatch:
 jobs:
-    run_landmine:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Download Code
-              uses: actions/checkout@v3
-            - name: Install Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "24"
-            - name: Install Dependencies
-              run: npm install
-            - name: Install TypeScript
-              run: npm install -g typescript --save -dev
-            - name: Run tsc
-              run: tsc Class_08_25/landmine.ts
-            - name: Run tsc
-              run: tsc --noEmit Class_08_25/landmine.ts
+  run_landmine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Code
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "24"
+      - name: Install Dependencies
+        run: npm install
+      - name: Install TypeScript
+        run: npm install -g typescript --save -dev
+      - name: Run tsc
+        run: tsc Class_08_25/landmine.ts
+      - name: Run tsc
+        run: tsc --noEmit Class_08_25/landmine.ts
