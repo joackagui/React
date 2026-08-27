@@ -24,3 +24,8 @@ jobs:
       - name: Run Vite Build
         working-directory: Class_08_26/tic-tac-toe
         run: npm run build
+      - name: Save Zip File
+        uses: actions/upload-artifact@v3
+        with:
+            name: tic-tac-toe-build
+            path: Class_08_26/tic-tac-toe/dist
