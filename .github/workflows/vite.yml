@@ -1,22 +1,26 @@
 name: Save Results
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
-    run_vite:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Download Code
-              uses: actions/checkout@v3
-            - name: Install Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "24"
-            - name: Install Dependencies
-              run: npm install
-            - name: Run Vite Build
-              run: |
-                  cd Class_08_26/tic-tac-toe
-                  npm run build
+  run_vite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "24"
+
+      - name: Install Dependencies
+        working-directory: Class_08_26/tic-tac-toe
+        run: npm install
+
+      - name: Run Vite Build
+        working-directory: Class_08_26/tic-tac-toe
+        run: npm run build
