@@ -28,13 +28,13 @@ jobs:
             - name: Run Vite Build
               working-directory: Class_08_27/counter
               run: npm run build
-            - name: Save Zip File
-              uses: actions/upload-artifact@v4
-              with:
-                  name: tic-tac-toe-build
-                  path: Class_08_27/counter/dist
-
             - name: Configure Github Pages
               uses: actions/configure-pages@v5
+            - name: Save Zip File
+              uses: actions/upload-pages-artifact@v4
+              with:
+                  name: counter-build
+                  path: Class_08_27/counter/dist
+
             - name: Deploy to Github Pages
               uses: actions/deploy-pages@v4
