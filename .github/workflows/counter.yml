@@ -29,3 +29,7 @@ jobs:
               with:
                   name: tic-tac-toe-build
                   path: Class_08_27/counter/dist
+
+            - name: Configure Github Pages
+              uses: actions/configure-pages@v5
+
