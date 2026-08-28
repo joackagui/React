@@ -8,7 +8,7 @@ on:
 permissions:
     contents: read
     id-token: write
-    pages: read
+    pages: write
 jobs:
     run_vite:
         runs-on: ubuntu-latest
