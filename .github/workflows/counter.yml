@@ -5,6 +5,9 @@ on:
             - main
     workflow_dispatch:
 
+permissions:
+    contents: read
+    id-token: write
 jobs:
     run_vite:
         runs-on: ubuntu-latest
@@ -32,4 +35,5 @@ jobs:
 
             - name: Configure Github Pages
               uses: actions/configure-pages@v5
-
+            - name: Deploy to Github Pages
+              uses: actions/deploy-pages@v4
