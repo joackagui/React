@@ -1,0 +1,31 @@
+name: Save Results
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    run_vite:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download Code
+              uses: actions/checkout@v3
+
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "24"
+
+            - name: Install Dependencies
+              working-directory: Class_08_27/counter
+              run: npm install
+
+            - name: Run Vite Build
+              working-directory: Class_08_27/counter
+              run: npm run build
+            - name: Save Zip File
+              uses: actions/upload-artifact@v4
+              with:
+                  name: tic-tac-toe-build
+                  path: Class_08_27/counter/dist

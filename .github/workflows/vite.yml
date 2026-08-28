@@ -1,8 +1,5 @@
 name: Save Results
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -27,5 +24,5 @@ jobs:
       - name: Save Zip File
         uses: actions/upload-artifact@v4
         with:
-            name: tic-tac-toe-build
-            path: Class_08_26/tic-tac-toe/dist
+          name: tic-tac-toe-build
+          path: Class_08_26/tic-tac-toe/dist
