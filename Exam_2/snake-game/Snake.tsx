@@ -42,11 +42,12 @@ export default function SnakeGame() {
   const moveSnake = (newDirection: Direction): void => {
     const headPosition = snakePosition[0];
     const nextHeadPosition = getNextPosition(headPosition, newDirection);
-    const die: boolean = 
+    const die: boolean =
       nextHeadPosition < 0 ||
       nextHeadPosition > totalCells ||
       (newDirection === "left" && headPosition % boardSize === 0) ||
-      (newDirection === "right" && headPosition % boardSize === boardSize - 1) ||
+      (newDirection === "right" &&
+        headPosition % boardSize === boardSize - 1) ||
       snakePosition.includes(nextHeadPosition);
 
     if (die) {
@@ -86,13 +87,21 @@ export default function SnakeGame() {
     setFruitPosition(getRandomFruitPosition(initialSnake));
   };
 
-  const board = Array.from({ length: totalCells }, (_, position) => {
-    const snakeSegment = snakePosition.indexOf(position);
-    if (snakeSegment === 0) return "🐸";
-    if (snakeSegment > 0) return "🟩";
-    if (position === fruitPosition) return "🍎";
-    return "";
-  });
+  const board: string[] = [];
+
+  for (let position = 0; position < totalCells; position++) {
+    const snakeIndex = snakePosition.indexOf(position);
+
+    if (snakeIndex === 0) {
+      board.push("🐸");
+    } else if (snakeIndex > 0) {
+      board.push("🟩");
+    } else if (position === fruitPosition) {
+      board.push("🍎");
+    } else {
+      board.push("");
+    }
+  }
 
   return (
     <div tabIndex={0} autoFocus onKeyDown={handleKeyDown}>
