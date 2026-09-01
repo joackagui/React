@@ -3,10 +3,12 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import KeysExample from '../keysExample.tsx'
 import Counter from '../counter.tsx'
+import { Welcome } from '../welcome.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <KeysExample />
     <Counter />
+    <Welcome name="Alice" />
   </StrictMode>
 )
