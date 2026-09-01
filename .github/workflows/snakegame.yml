@@ -1,0 +1,39 @@
+name: Snake Game
+on:
+    workflow_dispatch:
+jobs:
+    run_landmine:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download Code
+              uses: actions/checkout@v3
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "24"
+            - name: Install Dependencies
+              run: npm install
+            - name: Install TypeScript
+              run: npm install -g typescript --save -dev
+            - name: Run tsc
+              run: tsc --noEmit Exam_2/snake-game/src/main.tsx
+
+            - name: Run Vite Build
+              working-directory: Exam_2/snake-game
+              run: npm run build
+              
+            - name: Save Zip File
+              uses: actions/upload-artifact@v4
+              with:
+                  name: snake-game-build
+                  path: Exam_2/snake-game/dist
+
+            - name: Configure GitHub Pages
+              uses: actions/configure-pages@v5
+
+            - name: Upload Pages Artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: Exam_2/snake-game/dist
+            - name: Deploy to GitHub Pages
+              uses: actions/deploy-pages@v4
