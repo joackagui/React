@@ -1,39 +1,36 @@
 name: Save Results
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+  workflow_dispatch:
 
 permissions:
-    contents: read
-    id-token: write
-    pages: write
+  contents: read
+  id-token: write
+  pages: write
 jobs:
-    run_vite:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Download Code
-              uses: actions/checkout@v4
+  run_vite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Code
+        uses: actions/checkout@v4
 
-            - name: Install Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "24"
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
 
-            - name: Install Dependencies
-              working-directory: Class_08_27/counter
-              run: npm install
+      - name: Install Dependencies
+        working-directory: Class_08_27/counter
+        run: npm install
 
-            - name: Run Vite Build
-              working-directory: Class_08_27/counter
-              run: npm run build
-            - name: Configure GitHub Pages
-              uses: actions/configure-pages@v5
+      - name: Run Vite Build
+        working-directory: Class_08_27/counter
+        run: npm run build
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-            - name: Upload Pages Artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  path: Class_08_27/counter/dist
-            - name: Deploy to GitHub Pages
-              uses: actions/deploy-pages@v4
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: Class_08_27/counter/dist
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

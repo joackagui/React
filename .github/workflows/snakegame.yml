@@ -1,5 +1,8 @@
 name: Snake Game
 on:
+    push:
+        branches:
+            - main
     workflow_dispatch:
 jobs:
     run_landmine:
@@ -21,7 +24,7 @@ jobs:
             - name: Run Vite Build
               working-directory: Exam_2/snake-game
               run: npm run build
-              
+
             - name: Save Zip File
               uses: actions/upload-artifact@v4
               with:
