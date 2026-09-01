@@ -21,9 +21,7 @@ jobs:
             - name: Install Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: 24
-                  cache: npm
-                  cache-dependency-path: Exam_2/snake-game/package-lock.json
+                  node-version: "24"
 
             - name: Install Dependencies
               run: npm i
