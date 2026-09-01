@@ -4,39 +4,50 @@ on:
         branches:
             - main
     workflow_dispatch:
+permissions:
+    contents: read
+    pages: write
+    id-token: write
+concurrency:
+    group: pages
+    cancel-in-progress: true
 jobs:
-    run_landmine:
+    run_snakegame:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: Exam_2/snake-game
         steps:
             - name: Download Code
-              uses: actions/checkout@v3
-            - name: Install Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "24"
-            - name: Install Dependencies
-              run: npm install
-            - name: Install TypeScript
-              run: npm install -g typescript --save -dev
-            - name: Run tsc
-              run: tsc --noEmit Exam_2/snake-game/src/main.tsx
+              uses: actions/checkout@v4
 
-            - name: Run Vite Build
-              working-directory: Exam_2/snake-game
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: npm
+                  cache-dependency-path: Exam_2/snake-game/package-lock.json
+
+            - name: Install Dependencies
+              run: npm ci
+
+            - name: Configure GitHub Pages
+              id: pages
+              uses: actions/configure-pages@v5
+
+            - name: Run Build
               run: npm run build
 
-            - name: Save Zip File
+            - name: Save Build Artifact
               uses: actions/upload-artifact@v4
               with:
                   name: snake-game-build
                   path: Exam_2/snake-game/dist
 
-            - name: Configure GitHub Pages
-              uses: actions/configure-pages@v5
-
             - name: Upload Pages Artifact
               uses: actions/upload-pages-artifact@v3
               with:
                   path: Exam_2/snake-game/dist
+
             - name: Deploy to GitHub Pages
               uses: actions/deploy-pages@v4
