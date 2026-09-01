@@ -1,48 +1,39 @@
-name: Snake Game
+name: Save Results
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+  workflow_dispatch:
+
 permissions:
-    contents: read
-    pages: write
-    id-token: write
+  contents: read
+  id-token: write
+  pages: write
 jobs:
-    run_snakegame:
-        runs-on: ubuntu-latest
-        defaults:
-            run:
-                working-directory: Exam_2/snake-game
-        steps:
-            - name: Download Code
-              uses: actions/checkout@v4
+  run_snakegame:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Code
+        uses: actions/checkout@v4
 
-            - name: Install Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "24"
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
 
-            - name: Install Dependencies
-              run: npm i
+      - name: Install Dependencies
+        working-directory: Exam_2/snake-game
+        run: npm install
 
-            - name: Configure GitHub Pages
-              id: pages
-              uses: actions/configure-pages@v5
+      - name: Run Vite Build
+        working-directory: Exam_2/snake-game
+        run: npm run build
 
-            - name: Run Build
-              run: npm run build
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-            - name: Save Build Artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: snake-game-build
-                  path: Exam_2/snake-game/dist
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: Exam_2/snake-game/dist
 
-            - name: Upload Pages Artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  path: Exam_2/snake-game/dist
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
 
-            - name: Deploy to GitHub Pages
-              uses: actions/deploy-pages@v4
