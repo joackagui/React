@@ -22,18 +22,18 @@ export default function SpaceInvaders() {
 
     const movement = setInterval(() => {
       if (pressedKeys.current.has("ArrowLeft")) {
-        setLeft((prev) => Math.max(0, prev - 1));
+        setLeft((prev) => Math.max(0, prev - 5));
       }
       if (pressedKeys.current.has("ArrowRight")) {
-        setLeft((prev) => Math.min(20, prev + 1));
+        setLeft((prev) => Math.min(20, prev + 5));
       }
       if (pressedKeys.current.has("ArrowDown")) {
-        setBottom((prev) => Math.max(0, prev - 1));
+        setBottom((prev) => Math.max(0, prev - 5));
       }
       if (pressedKeys.current.has("ArrowUp")) {
-        setBottom((prev) => Math.min(15, prev + 1));
+        setBottom((prev) => Math.min(15, prev + 5));
       }
-    }, 100);
+    }, 300);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
