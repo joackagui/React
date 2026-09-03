@@ -1,11 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function SpaceInvaders() {
-  const [left, setLeft] = useState<number>(0);
-  const [bottom, setBottom] = useState<number>(0);
+  const gameRef = useRef<HTMLDivElement>(null);
+  const shipRef = useRef<HTMLDivElement>(null);
+  const enemyRef = useRef<HTMLDivElement>(null);
+  const shipPosition = useRef(0);
+  const [shipX, setShipX] = useState(0);
+  const [bulletX, setBulletX] = useState<number | null>(null);
+  const [bulletY, setBulletY] = useState<number | null>(null);
+  const [enemyX, setEnemyX] = useState<number | null>(null);
+  const [enemyBulletX, setEnemyBulletX] = useState<number | null>(null);
+  const [enemyBulletY, setEnemyBulletY] = useState<number | null>(null);
   const pressedKeys = useRef(new Set<string>());
 
   useEffect(() => {
+    const updatePositions = () => {
+      const game = gameRef.current;
+      const ship = shipRef.current;
+      const enemy = enemyRef.current;
+
+      if (!game || !ship || !enemy) return;
+
+      const gameWidth = game.clientWidth;
+      const enemyWidth = enemy.offsetWidth;
+      const centeredShip = gameWidth / 2;
+      const randomEnemyX =
+        enemyWidth / 2 + Math.random() * (gameWidth - enemyWidth);
+
+      shipPosition.current = centeredShip;
+      setShipX(centeredShip);
+      setBulletX(centeredShip);
+      setBulletY(ship.offsetHeight);
+      setEnemyX(randomEnemyX);
+      setEnemyBulletX(randomEnemyX);
+      setEnemyBulletY(enemy.offsetTop + enemy.offsetHeight);
+    };
+
+    updatePositions();
+    window.addEventListener("resize", updatePositions);
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key.startsWith("Arrow")) {
         e.preventDefault();
@@ -21,35 +54,76 @@ export default function SpaceInvaders() {
     window.addEventListener("keyup", handleKeyUp);
 
     const movement = setInterval(() => {
+      const game = gameRef.current;
+      const ship = shipRef.current;
+
+      if (!game || !ship) return;
+
+      const minimumX = ship.offsetWidth / 2;
+      const maximumX = game.clientWidth - minimumX;
+      let nextX = shipPosition.current;
+
       if (pressedKeys.current.has("ArrowLeft")) {
-        setLeft((prev) => Math.max(0, prev - 5));
+        nextX -= 8;
       }
       if (pressedKeys.current.has("ArrowRight")) {
-        setLeft((prev) => Math.min(20, prev + 5));
+        nextX += 8;
       }
-      if (pressedKeys.current.has("ArrowDown")) {
-        setBottom((prev) => Math.max(0, prev - 5));
-      }
-      if (pressedKeys.current.has("ArrowUp")) {
-        setBottom((prev) => Math.min(15, prev + 5));
-      }
+
+      nextX = Math.max(minimumX, Math.min(maximumX, nextX));
+      shipPosition.current = nextX;
+      setShipX(nextX);
     }, 300);
 
     return () => {
+      window.removeEventListener("resize", updatePositions);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
       clearInterval(movement);
     };
   }, []);
 
+  useEffect(() => {
+    const bulletMovement = setInterval(() => {
+      const gameHeight = gameRef.current?.clientHeight ?? 0;
+
+      setBulletY((currentY) => {
+        if (currentY === null) return null;
+        const nextY = currentY + 40;
+        return nextY >= gameHeight ? null : nextY;
+      });
+
+      setEnemyBulletY((currentY) => {
+        if (currentY === null) return null;
+        const nextY = currentY + 40;
+        return nextY >= gameHeight ? null : nextY;
+      });
+    }, 500);
+
+    return () => clearInterval(bulletMovement);
+  }, []);
+
   return (
-    <div className="game">
+    <div className="game" ref={gameRef}>
       <h1>Space Invaders</h1>
+      {enemyBulletX !== null && enemyBulletY !== null && (
+        <div
+          className="enemy_bullet"
+          style={{ left: `${enemyBulletX}px`, top: `${enemyBulletY}px` }}
+        ></div>
+      )}
+      {bulletX !== null && bulletY !== null && (
+        <div
+          className="bullet"
+          style={{ left: `${bulletX}px`, bottom: `${bulletY}px` }}
+        ></div>
+      )}
+      <div className="ship" ref={shipRef} style={{ left: `${shipX}px` }}></div>
       <div
-        className="shoot"
-        style={{ left: `${left}rem`, bottom: `${bottom}rem` }}
+        className="enemy_ship"
+        ref={enemyRef}
+        style={{ left: enemyX === null ? "50%" : `${enemyX}px` }}
       ></div>
-      <div className="weapon"></div>
     </div>
   );
 }

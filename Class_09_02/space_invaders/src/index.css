@@ -117,19 +117,38 @@ code {
   background: var(--code-bg);
 }
 
-.weapon {
+.ship {
+  position: absolute;
+  bottom: 0;
   width: 25rem;
   height: 5rem;
   background-color: red;
   border: 1px solid var(--border);
-  margin: 0 auto;
-  margin-top: auto;
   flex-shrink: 0;
+  transform: translateX(-50%);
 }
 
-.shoot {
+.bullet {
   position: absolute;
+  width: 0.75rem;
+  height: 1.5rem;
+  background-color: white;
+  transform: translateX(-50%);
+}
+
+.enemy_bullet {
+  position: absolute;
+  width: 0.75rem;
+  height: 1.5rem;
+  background-color: red;
+  transform: translateX(-50%);
+}
+
+.enemy_ship {
+  position: absolute;
+  top: 7rem;
   width: 5rem;
   height: 5rem;
-  background-color: white;
+  background-color: red;
+  transform: translateX(-50%);
 }
