@@ -1,39 +1,41 @@
 import { useEffect, useRef, useState } from "react";
 
+type Bullet = {
+  id: number;
+  x: number;
+  y: number;
+};
+
+type Enemy = {
+  x: number;
+  y: number;
+};
+
 export default function SpaceInvaders() {
   const gameRef = useRef<HTMLDivElement>(null);
   const shipRef = useRef<HTMLDivElement>(null);
-  const enemyRef = useRef<HTMLDivElement>(null);
   const shipPosition = useRef(0);
+  const enemiesRef = useRef<Enemy[]>([]);
+  const enemyBulletTimers = useRef<ReturnType<typeof setInterval>[]>([]);
   const [shipX, setShipX] = useState(0);
-  const [bulletX, setBulletX] = useState<number | null>(null);
-  const [bulletY, setBulletY] = useState<number | null>(null);
-  const [enemyX, setEnemyX] = useState<number | null>(null);
-  const [enemyBulletX, setEnemyBulletX] = useState<number | null>(null);
-  const [enemyBulletY, setEnemyBulletY] = useState<number | null>(null);
+  const [bullets, setBullets] = useState<Bullet[]>([]);
+  const enemies = Array<Enemy>();
+  const [enemy, setEnemy] = useState<Array<Enemy>>(enemies);
+  const [enemyBullets, setEnemyBullets] = useState<Bullet[]>([]);
   const pressedKeys = useRef(new Set<string>());
 
   useEffect(() => {
     const updatePositions = () => {
       const game = gameRef.current;
       const ship = shipRef.current;
-      const enemy = enemyRef.current;
 
-      if (!game || !ship || !enemy) return;
+      if (!game || !ship) return;
 
       const gameWidth = game.clientWidth;
-      const enemyWidth = enemy.offsetWidth;
       const centeredShip = gameWidth / 2;
-      const randomEnemyX =
-        enemyWidth / 2 + Math.random() * (gameWidth - enemyWidth);
 
       shipPosition.current = centeredShip;
       setShipX(centeredShip);
-      setBulletX(centeredShip);
-      setBulletY(ship.offsetHeight);
-      setEnemyX(randomEnemyX);
-      setEnemyBulletX(randomEnemyX);
-      setEnemyBulletY(enemy.offsetTop + enemy.offsetHeight);
     };
 
     updatePositions();
@@ -44,6 +46,19 @@ export default function SpaceInvaders() {
         e.preventDefault();
         pressedKeys.current.add(e.key);
       }
+
+      if (e.code === "Space" && !e.repeat) {
+        e.preventDefault();
+        setBullets((currentBullets) => {
+          const nextBullets = [...currentBullets];
+          nextBullets.push({
+            id: Date.now() + Math.random(),
+            x: shipPosition.current,
+            y: shipRef.current?.offsetHeight ?? 0,
+          });
+          return nextBullets;
+        });
+      }
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
@@ -52,6 +67,42 @@ export default function SpaceInvaders() {
 
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
+
+    const enemyCreation = setInterval(() => {
+      if (enemiesRef.current.length >= 5) return;
+
+      const occupiedPositions = new Set(
+        enemiesRef.current.map((currentEnemy) => currentEnemy.x),
+      );
+      const availablePositions = [0, 1, 2, 3, 4].filter(
+        (position) => !occupiedPositions.has(position),
+      );
+      const position = {
+        x: availablePositions[
+          Math.floor(Math.random() * availablePositions.length)
+        ],
+        y: 10,
+      };
+      const nextEnemies = [...enemiesRef.current, position];
+      enemiesRef.current = nextEnemies;
+      setEnemy(nextEnemies);
+
+      const gameWidth = gameRef.current?.clientWidth ?? 0;
+      const bulletX = gameWidth * ((position.x * 20 + 10) / 100);
+      const createEnemyBullet = () => {
+        setEnemyBullets((currentBullets) => [
+          ...currentBullets,
+          {
+            id: Date.now() + Math.random(),
+            x: bulletX,
+            y: position.y * 16 + 5 * 16,
+          },
+        ]);
+      };
+
+      createEnemyBullet();
+      enemyBulletTimers.current.push(setInterval(createEnemyBullet, 3000));
+    }, 3000);
 
     const movement = setInterval(() => {
       const game = gameRef.current;
@@ -73,13 +124,16 @@ export default function SpaceInvaders() {
       nextX = Math.max(minimumX, Math.min(maximumX, nextX));
       shipPosition.current = nextX;
       setShipX(nextX);
-    }, 300);
+    }, 16);
 
     return () => {
       window.removeEventListener("resize", updatePositions);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
       clearInterval(movement);
+      clearInterval(enemyCreation);
+      enemyBulletTimers.current.forEach((timer) => clearInterval(timer));
+      enemyBulletTimers.current = [];
     };
   }, []);
 
@@ -87,18 +141,18 @@ export default function SpaceInvaders() {
     const bulletMovement = setInterval(() => {
       const gameHeight = gameRef.current?.clientHeight ?? 0;
 
-      setBulletY((currentY) => {
-        if (currentY === null) return null;
-        const nextY = currentY + 40;
-        return nextY >= gameHeight ? null : nextY;
-      });
+      setBullets((currentBullets) =>
+        currentBullets
+          .map((bullet) => ({ ...bullet, y: bullet.y + 40 }))
+          .filter((bullet) => bullet.y < gameHeight),
+      );
 
-      setEnemyBulletY((currentY) => {
-        if (currentY === null) return null;
-        const nextY = currentY + 40;
-        return nextY >= gameHeight ? null : nextY;
-      });
-    }, 500);
+      setEnemyBullets((currentBullets) =>
+        currentBullets
+          .map((bullet) => ({ ...bullet, y: bullet.y + 40 }))
+          .filter((bullet) => bullet.y < gameHeight),
+      );
+    }, 250);
 
     return () => clearInterval(bulletMovement);
   }, []);
@@ -106,24 +160,31 @@ export default function SpaceInvaders() {
   return (
     <div className="game" ref={gameRef}>
       <h1>Space Invaders</h1>
-      {enemyBulletX !== null && enemyBulletY !== null && (
+      {enemyBullets.map((bullet) => (
         <div
           className="enemy_bullet"
-          style={{ left: `${enemyBulletX}px`, top: `${enemyBulletY}px` }}
+          key={bullet.id}
+          style={{ left: `${bullet.x}px`, top: `${bullet.y}px` }}
         ></div>
-      )}
-      {bulletX !== null && bulletY !== null && (
+      ))}
+      {bullets.map((bullet) => (
         <div
           className="bullet"
-          style={{ left: `${bulletX}px`, bottom: `${bulletY}px` }}
+          key={bullet.id}
+          style={{ left: `${bullet.x}px`, bottom: `${bullet.y}px` }}
         ></div>
-      )}
+      ))}
       <div className="ship" ref={shipRef} style={{ left: `${shipX}px` }}></div>
-      <div
-        className="enemy_ship"
-        ref={enemyRef}
-        style={{ left: enemyX === null ? "50%" : `${enemyX}px` }}
-      ></div>
+      {enemy.map((currentEnemy, index) => (
+        <div
+          className="enemy_ship"
+          key={index}
+          style={{
+            left: `${currentEnemy.x * 20 + 10}%`,
+            top: `${currentEnemy.y}rem`,
+          }}
+        ></div>
+      ))}
     </div>
   );
 }

@@ -120,9 +120,9 @@ code {
 .ship {
   position: absolute;
   bottom: 0;
-  width: 25rem;
-  height: 5rem;
-  background-color: red;
+  width: 5rem;
+  height: 2.5rem;
+  background-color: white;
   border: 1px solid var(--border);
   flex-shrink: 0;
   transform: translateX(-50%);
@@ -147,8 +147,8 @@ code {
 .enemy_ship {
   position: absolute;
   top: 7rem;
-  width: 5rem;
-  height: 5rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background-color: red;
   transform: translateX(-50%);
 }
