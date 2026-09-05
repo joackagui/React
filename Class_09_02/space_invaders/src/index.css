@@ -71,6 +71,10 @@ body {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  background-image: url("../space-background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 h1,
@@ -120,12 +124,15 @@ code {
 .ship {
   position: absolute;
   bottom: 0;
-  width: 5rem;
+  width: 2rem;
   height: 2.5rem;
-  background-color: white;
-  border: 1px solid var(--border);
+  background-image: url("../space-ship.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   flex-shrink: 0;
   transform: translateX(-50%);
+  background-color: transparent;
 }
 
 .bullet {
@@ -149,6 +156,47 @@ code {
   top: 7rem;
   width: 2.5rem;
   height: 2.5rem;
-  background-color: red;
+  background-color: transparent;
   transform: translateX(-50%);
+  background-image: url("../space-enemy-ship.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
+/* 
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.overlay-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.restart-button {
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--text-h);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.restart-button:hover {
+  background: var(--accent);
+  color: white;
+} */
