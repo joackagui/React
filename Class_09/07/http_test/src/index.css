@@ -11,8 +11,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -93,6 +93,53 @@ h2 {
 }
 p {
   margin: 0;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 32px 20px;
+}
+
+.board {
+  border-collapse: collapse;
+  border: 3px solid var(--text-h);
+}
+
+.board td {
+  width: 88px;
+  height: 88px;
+  padding: 0;
+  border: 2px solid var(--text-h);
+}
+
+.board button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  color: var(--text-h);
+  background: var(--bg);
+  font: 700 42px/1 var(--sans);
+  cursor: pointer;
+}
+
+.board button:not(:disabled):hover {
+  background: var(--accent-bg);
+}
+
+.board button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.board button:disabled {
+  cursor: default;
 }
 
 code,
