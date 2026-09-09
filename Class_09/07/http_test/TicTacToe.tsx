@@ -41,7 +41,7 @@ export default function TicTacToe() {
   return (
     <main className="game">
       <h1>Tic Tac Toe</h1>
-      <table className="board" aria-label="Tablero de tres en raya">
+      <table className="board" aria-label="Tic Tac Toe Board">
         <tbody>
           {Array.from({ length: boardSize }, (_, row) => (
             <tr key={row}>
